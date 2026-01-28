@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Salesforce Log Filter</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Salesforce Debug Log Filter</h1>
+    </header>
+
+    <div class="controls">
+      <button id="selectAll" class="btn btn-secondary">Select All</button>
+      <button id="deselectAll" class="btn btn-secondary">Deselect All</button>
+    </div>
+
+    <div class="search-box">
+      <input type="text" id="searchTags" placeholder="Search tags...">
+    </div>
+
+    <div class="tags-container" id="tagsContainer">
+      <!-- Tags will be dynamically inserted here -->
+    </div>
+
+    <div class="action-buttons">
+      <button id="applyFilter" class="btn btn-primary">Apply Filter</button>
+      <button id="clearFilter" class="btn btn-secondary">Clear Filter</button>
+      <button id="downloadFiltered" class="btn btn-secondary">Download Filtered Log</button>
+    </div>
+
+    <div class="stats" id="stats">
+      <span id="selectedCount">0</span> tags selected
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

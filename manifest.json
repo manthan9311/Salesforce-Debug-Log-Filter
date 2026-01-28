@@ -1,0 +1,20 @@
+{
+  "manifest_version": 3,
+  "name": "Salesforce Debug Log Filter",
+  "version": "1.0.0",
+  "description": "Filter Salesforce debug logs by tags like CODE_UNIT_STARTED, VARIABLE_ASSIGNMENT, etc.",
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.salesforce.com/*", "*://*.force.com/*", "*://*.lightning.force.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
