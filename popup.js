@@ -208,3 +208,11 @@ document.getElementById('downloadFiltered').addEventListener('click', function()
 });
 
 initializeUI();
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.action === "noFilteredContent") {
+    // type "error" will render with your existing red styling
+    showNotification(request.message || "No matching log lines found.", "error");
+    sendResponse({ acknowledged: true });
+  }
+});
