@@ -95,7 +95,6 @@ function findLogElements() {
   return null;
 }
 
-
 function getLogContent(element) {
   if (element.tagName === 'TEXTAREA' || element.tagName === 'INPUT') {
     return element.value;
@@ -137,6 +136,15 @@ function applyFilter(tags) {
   }
 
   filteredLogContent = filterLogByTags(originalLogContent, tags);
+  if (!filteredLogContent) {
+    console.log('No log element found on this page');
+	chrome.runtime.sendMessage({
+      action: "noFilteredContent",
+      message: "No log lines match the selected tags."
+    });
+    
+    return;
+  }
   setLogContent(logElement, filteredLogContent);
   isFilterActive = true;
 
@@ -144,13 +152,15 @@ function applyFilter(tags) {
 }
 
 function clearFilter() {
+  
+  
   const logElement = findLogElements();
-
+/*
   if (!logElement) {
     console.log('No log element found on this page');
     return;
   }
-
+*/
   if (originalLogContent) {
     setLogContent(logElement, originalLogContent);
   }
