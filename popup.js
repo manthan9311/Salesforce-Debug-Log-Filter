@@ -201,9 +201,31 @@ document.getElementById('clearFilter').addEventListener('click', function() {
   });
 });
 
+document.getElementById('downloadOriginal').addEventListener('click', function() {
+  sendMessageToTab({
+    action: 'downloadLog',
+    type: 'original'
+  });
+});
+
 document.getElementById('downloadFiltered').addEventListener('click', function() {
   sendMessageToTab({
-    action: 'downloadFiltered'
+    action: 'downloadLog',
+    type: 'filtered'
+  });
+});
+
+document.getElementById('downloadTrimmedOriginal').addEventListener('click', function() {
+  sendMessageToTab({
+    action: 'downloadLog',
+    type: 'trimmed-original'
+  });
+});
+
+document.getElementById('downloadTrimmedFiltered').addEventListener('click', function() {
+  sendMessageToTab({
+    action: 'downloadLog',
+    type: 'trimmed-filtered'
   });
 });
 
