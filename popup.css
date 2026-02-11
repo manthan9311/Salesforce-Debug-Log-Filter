@@ -109,6 +109,33 @@ header h1 {
   padding: 16px;
   background: white;
   border-top: 1px solid #e9ecef;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.download-section {
+  padding: 16px;
+  background: white;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.section-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: #6c757d;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+}
+
+.download-section .btn-small {
+  padding: 10px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.download-section .btn-small:last-child {
+  margin-bottom: 0;
 }
 
 .btn {
