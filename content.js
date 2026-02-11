@@ -219,17 +219,61 @@ function removeFilterIndicator() {
   }
 }
 
-function downloadFilteredLog() {
-  if (!isFilterActive || !filteredLogContent) {
-    alert('No filtered log to download. Please apply a filter first.');
-    return;
+function trimLogLine(line) {
+  let trimmed = line;
+
+  trimmed = trimmed.replace(/^\d+\s+/, '');
+
+  trimmed = trimmed.replace(/\(\d+\)\s*/, '');
+
+  trimmed = trimmed.replace(/[\u0080-\uffff]+$/, '');
+
+  return trimmed;
+}
+
+function downloadLog(type) {
+  let contentToDownload = '';
+  let filename = '';
+
+  if (type === 'original') {
+    if (!originalLogContent) {
+      alert('No log content available.');
+      return;
+    }
+    contentToDownload = originalLogContent;
+    filename = `original-log-${Date.now()}.txt`;
+  } else if (type === 'filtered') {
+    if (!isFilterActive || !filteredLogContent) {
+      alert('No filtered log available. Please apply a filter first.');
+      return;
+    }
+    contentToDownload = filteredLogContent;
+    filename = `filtered-log-${Date.now()}.txt`;
+  } else if (type === 'trimmed-original') {
+    if (!originalLogContent) {
+      alert('No log content available.');
+      return;
+    }
+    const lines = originalLogContent.split('\n');
+    const trimmedLines = lines.map(line => trimLogLine(line));
+    contentToDownload = trimmedLines.join('\n');
+    filename = `trimmed-original-log-${Date.now()}.txt`;
+  } else if (type === 'trimmed-filtered') {
+    if (!isFilterActive || !filteredLogContent) {
+      alert('No filtered log available. Please apply a filter first.');
+      return;
+    }
+    const lines = filteredLogContent.split('\n');
+    const trimmedLines = lines.map(line => trimLogLine(line));
+    contentToDownload = trimmedLines.join('\n');
+    filename = `trimmed-filtered-log-${Date.now()}.txt`;
   }
 
-  const blob = new Blob([filteredLogContent], { type: 'text/plain' });
+  const blob = new Blob([contentToDownload], { type: 'text/plain' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `filtered-log-${Date.now()}.txt`;
+  a.download = filename;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
@@ -243,8 +287,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   } else if (request.action === 'clearFilter') {
     clearFilter();
     sendResponse({ success: true });
-  } else if (request.action === 'downloadFiltered') {
-    downloadFilteredLog();
+  } else if (request.action === 'downloadLog') {
+    downloadLog(request.type);
     sendResponse({ success: true });
   }
 });
