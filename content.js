@@ -222,9 +222,11 @@ function removeFilterIndicator() {
 function trimLogLine(line) {
   let trimmed = line;
 
-  trimmed = trimmed.replace(/^\d+\s+/, '');
+  trimmed = trimmed.replace(/^\d{1,2}:\d{2}:\d{2}\.\d+\s+/, '');
 
-  trimmed = trimmed.replace(/\(\d+\)\s*/, '');
+  trimmed = trimmed.replace(/\(\d+\)\|/, '');
+
+  trimmed = trimmed.replace(/\|(\[\])?(\|)?0x[a-f0-9]+$/, '');
 
   trimmed = trimmed.replace(/[\u0080-\uffff]+$/, '');
 
