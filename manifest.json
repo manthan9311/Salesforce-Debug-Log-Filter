@@ -10,10 +10,11 @@
   "action": {
     "default_popup": "popup.html"
   },
+  "options_page": "options.html",
   "content_scripts": [
     {
       "matches": ["*://*.salesforce.com/*", "*://*.force.com/*", "*://*.lightning.force.com/*"],
-      "js": ["content.js"],
+      "js": ["tags.js", "content.js"],
       "run_at": "document_idle"
     }
   ]
