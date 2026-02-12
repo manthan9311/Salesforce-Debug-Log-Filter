@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Log Filter Options</title>
+  <link rel="stylesheet" href="popup.css">
+  <style>
+    body {
+      min-width: 600px;
+      min-height: 400px;
+    }
+
+    .container {
+      max-width: 800px;
+    }
+
+    .options-header {
+      margin-bottom: 20px;
+    }
+
+    .options-header h1 {
+      font-size: 20px;
+      margin-bottom: 5px;
+    }
+
+    .options-header p {
+      color: #666;
+      font-size: 14px;
+    }
+
+    .save-indicator {
+      margin-top: 20px;
+      padding: 10px 15px;
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+      border-radius: 4px;
+      display: none;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .save-indicator.show {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="options-header">
+      <h1>Salesforce Log Filter - Options</h1>
+      <p>Select which log tags should be available in the popup filter.</p>
+    </header>
+
+    <div class="controls">
+      <button id="selectAll" class="btn btn-secondary">Select All</button>
+      <button id="deselectAll" class="btn btn-secondary">Deselect All</button>
+    </div>
+
+    <div class="search-box">
+      <input type="text" id="searchTags" placeholder="Search tags...">
+    </div>
+
+    <div class="tags-container" id="tagsContainer">
+      <!-- Tags will be dynamically inserted here -->
+    </div>
+
+    <div class="save-indicator" id="saveIndicator">
+      Settings saved automatically!
+    </div>
+  </div>
+
+  <script src="tags.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>
