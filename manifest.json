@@ -11,6 +11,9 @@
     "default_popup": "popup.html"
   },
   "options_page": "options.html",
+  "background": {
+    "service_worker": "background.js"
+  },
   "content_scripts": [
     {
       "matches": ["*://*.salesforce.com/*", "*://*.force.com/*", "*://*.lightning.force.com/*"],
