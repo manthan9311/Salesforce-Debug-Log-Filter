@@ -1,0 +1,88 @@
+{
+  "profiles": [
+    {
+      "id": "performance-issue",
+      "name": "Performance Issue",
+      "description": "Debug slow query performance and database operations",
+      "isPrebuilt": true,
+      "tags": [
+        "SOQL_EXECUTE_BEGIN",
+        "SOQL_EXECUTE_END",
+        "DML_BEGIN",
+        "DML_END",
+        "CALLOUT_REQUEST",
+        "CALLOUT_RESPONSE",
+        "CODE_UNIT_STARTED",
+        "CODE_UNIT_FINISHED",
+		"METHOD_ENTRY",
+        "METHOD_EXIT"
+      ]
+    },
+    {
+      "id": "null-reference-issue",
+      "name": "Null Reference Issue",
+      "description": "Debug null pointer and reference exceptions",
+      "isPrebuilt": true,
+      "tags": [
+        "VARIABLE_ASSIGNMENT",
+        "EXCEPTION_THROWN",
+        "METHOD_ENTRY",
+        "METHOD_EXIT",
+        "USER_DEBUG",
+        "CODE_UNIT_STARTED"
+      ]
+    },
+    {
+      "id": "cpu-timeout-issue",
+      "name": "CPU Timeout Issue",
+      "description": "Debug CPU timeout and governor limit issues",
+      "isPrebuilt": true,
+      "tags": [
+        "CODE_UNIT_STARTED",
+        "CODE_UNIT_FINISHED",
+        "METHOD_ENTRY",
+        "METHOD_EXIT",
+        "SOQL_EXECUTE_BEGIN",
+        "SOQL_EXECUTE_END",
+        "DML_BEGIN",
+        "DML_END",
+        "EXCEPTION_THROWN"
+      ]
+    },
+    {
+      "id": "callout-issue",
+      "name": "Callout Issue",
+      "description": "Debug external API callouts and HTTP issues",
+      "isPrebuilt": true,
+      "tags": [
+        "CALLOUT_REQUEST",
+        "CALLOUT_RESPONSE",
+        "EXCEPTION_THROWN",
+        "METHOD_ENTRY",
+        "METHOD_EXIT",
+        "USER_DEBUG"
+      ]
+    },
+    {
+      "id": "complete-trace",
+      "name": "Complete Trace",
+      "description": "View all debug log entries",
+      "isPrebuilt": true,
+      "tags": [
+        "CODE_UNIT_STARTED",
+        "CODE_UNIT_FINISHED",
+        "METHOD_ENTRY",
+        "METHOD_EXIT",
+        "VARIABLE_ASSIGNMENT",
+        "USER_DEBUG",
+        "DML_BEGIN",
+        "DML_END",
+        "SOQL_EXECUTE_BEGIN",
+        "EXCEPTION_THROWN",
+        "SOQL_EXECUTE_END",
+        "CALLOUT_REQUEST",
+        "CALLOUT_RESPONSE"
+      ]
+    }
+  ]
+}

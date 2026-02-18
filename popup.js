@@ -1,8 +1,11 @@
 let enabledTags = [];
 let selectedTags = new Set();
+let profiles = [];
+let selectedProfileId = null;
+let isManualMode = false;
 
 function initializeUI() {
-  chrome.storage.local.get(['enabledTags', 'selectedTags'], function(result) {
+  chrome.storage.local.get(['enabledTags', 'selectedTags', 'profiles', 'selectedProfile'], function(result) {
     if (result.enabledTags && result.enabledTags.length > 0) {
       enabledTags = result.enabledTags;
     } else {
@@ -12,9 +15,92 @@ function initializeUI() {
     if (result.selectedTags) {
       selectedTags = new Set(result.selectedTags);
     }
+
+    if (result.profiles) {
+      profiles = result.profiles;
+    }
+
+    if (result.selectedProfile) {
+      selectedProfileId = result.selectedProfile;
+    }
+
+    renderProfileSelector();
+    updateProfileInfo();
     renderTags(enabledTags);
     updateSelectedCount();
   });
+}
+
+function renderProfileSelector() {
+  const selector = document.getElementById('profileSelector');
+  selector.innerHTML = '';
+
+  if (profiles.length === 0) {
+    const option = document.createElement('option');
+    option.value = '';
+    option.textContent = 'No profiles available';
+    option.disabled = true;
+    selector.appendChild(option);
+    return;
+  }
+
+  profiles.forEach(profile => {
+    const option = document.createElement('option');
+    option.value = profile.id;
+    option.textContent = profile.name;
+    if (profile.id === selectedProfileId) {
+      option.selected = true;
+    }
+    selector.appendChild(option);
+  });
+
+  selector.addEventListener('change', function() {
+    selectedProfileId = this.value;
+    isManualMode = false;
+    document.getElementById('manualFilterToggle').checked = false;
+    chrome.storage.local.set({ selectedProfile: selectedProfileId });
+    updateProfileInfo();
+    applyProfileTags();
+  });
+}
+
+function updateProfileInfo() {
+  const profileInfo = document.getElementById('profileInfo');
+  const profile = profiles.find(p => p.id === selectedProfileId);
+
+  if (!profile) {
+    profileInfo.innerHTML = '<p>Select a profile to get started</p>';
+    return;
+  }
+
+  let html = `<div style="margin-bottom: 8px;">${profile.description}</div>`;
+  html += '<div class="profile-tags-display">';
+  profile.tags.forEach(tag => {
+    html += `<span class="profile-tag-chip">${tag}</span>`;
+  });
+  html += '</div>';
+
+  profileInfo.innerHTML = html;
+}
+
+function applyProfileTags() {
+  const profile = profiles.find(p => p.id === selectedProfileId);
+  if (profile) {
+    selectedTags = new Set(profile.tags);
+    renderTags(enabledTags);
+    updateSelectedCount();
+  }
+}
+
+function toggleManualMode() {
+  isManualMode = document.getElementById('manualFilterToggle').checked;
+  document.getElementById('manualControlsContainer').style.display = isManualMode ? 'flex' : 'none';
+  document.getElementById('searchBoxContainer').style.display = isManualMode ? 'block' : 'none';
+  document.getElementById('tagsContainer').style.display = isManualMode ? 'block' : 'none';
+
+  if (!isManualMode) {
+    applyProfileTags();
+  }
 }
 
 function renderTags(tags) {
@@ -73,6 +159,8 @@ document.getElementById('searchTags').addEventListener('input', function(e) {
   );
   renderTags(filteredTags);
 });
+
+document.getElementById('manualFilterToggle').addEventListener('change', toggleManualMode);
 
 function sendMessageToTab(message) {
   chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
