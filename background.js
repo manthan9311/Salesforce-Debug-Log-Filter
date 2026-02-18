@@ -14,10 +14,15 @@ const DEFAULT_ENABLED_TAGS = [
   "CALLOUT_RESPONSE"
 ];
 
-chrome.runtime.onInstalled.addListener((details) => {
+chrome.runtime.onInstalled.addListener(async (details) => {
   if (details.reason === 'install') {
+    const response = await fetch(chrome.runtime.getURL('profiles-config.json'));
+    const configData = await response.json();
+
     chrome.storage.local.set({
-      enabledTags: DEFAULT_ENABLED_TAGS
+      enabledTags: DEFAULT_ENABLED_TAGS,
+      profiles: configData.profiles,
+      selectedProfile: 'complete-trace'
     });
   }
 });

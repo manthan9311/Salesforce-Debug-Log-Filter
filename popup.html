@@ -5,6 +5,75 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Salesforce Log Filter</title>
   <link rel="stylesheet" href="popup.css">
+  <style>
+    .profile-section {
+      padding: 12px 0;
+      border-bottom: 1px solid #e0e0e0;
+      margin-bottom: 15px;
+    }
+
+    .profile-selector {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .profile-selector label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #333;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .profile-selector select {
+      flex: 1;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+
+    .profile-info {
+      font-size: 12px;
+      color: #666;
+      padding: 8px;
+      background: #f5f5f5;
+      border-radius: 4px;
+    }
+
+    .profile-tags-display {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-top: 8px;
+    }
+
+    .profile-tag-chip {
+      display: inline-block;
+      padding: 2px 8px;
+      background: #e3f2fd;
+      color: #1976d2;
+      border-radius: 3px;
+      font-size: 11px;
+    }
+
+    .manual-filter-toggle {
+      font-size: 12px;
+      margin-top: 10px;
+    }
+
+    .manual-filter-toggle label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    .manual-filter-toggle input {
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -15,16 +84,34 @@
       </div>
     </header>
 
-    <div class="controls">
+    <div class="profile-section">
+      <label style="font-size: 12px; font-weight: 600; color: #333;">Debug Profile</label>
+      <div class="profile-selector">
+        <select id="profileSelector">
+          <!-- Profiles will be loaded here -->
+        </select>
+      </div>
+      <div class="profile-info" id="profileInfo">
+        <!-- Profile description and tags will appear here -->
+      </div>
+      <div class="manual-filter-toggle">
+        <label>
+          <input type="checkbox" id="manualFilterToggle">
+          <span>Customize tags manually</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="controls" id="manualControlsContainer" style="display: none;">
       <button id="selectAll" class="btn btn-secondary">Select All</button>
       <button id="deselectAll" class="btn btn-secondary">Deselect All</button>
     </div>
 
-    <div class="search-box">
+    <div class="search-box" id="searchBoxContainer" style="display: none;">
       <input type="text" id="searchTags" placeholder="Search tags...">
     </div>
 
-    <div class="tags-container" id="tagsContainer">
+    <div class="tags-container" id="tagsContainer" style="display: none;">
       <!-- Tags will be dynamically inserted here -->
     </div>
 
@@ -46,6 +133,7 @@
     </div>
   </div>
 
+  <script src="tags.js"></script>
   <script src="popup.js"></script>
 </body>
 </html>
